@@ -28,6 +28,7 @@ KeyboardInputManager.prototype.listen = function () {
     39: 1, // Right
     40: 2, // Down
     37: 3, // Left
+    67: -2, // C (Clear Undo)
     75: 0, // vim keybindings
     76: 1,
     74: 2,
@@ -47,7 +48,12 @@ KeyboardInputManager.prototype.listen = function () {
     if (!modifiers) {
       if (mapped !== undefined) {
         event.preventDefault();
-        self.emit("move", mapped);
+        if(mapped === -2) {
+          self.emit("clearUndo");
+        }
+        else {
+          self.emit("move", mapped);
+        }
       }
 
       if (event.which === 32) self.restart.bind(self)(event);

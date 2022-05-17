@@ -7,6 +7,7 @@ function GameManager(size, InputManager, Actuator, ScoreManager) {
   this.startTiles   = 2;
 
   this.inputManager.on("move", this.move.bind(this));
+  this.inputManager.on("clearUndo", this.clearUndo.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
 
@@ -283,3 +284,7 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
+
+GameManager.prototype.clearUndo = function() {
+  this.undoStack = this.undoStack.slice(-100);
+}
